@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    html,
+    body {
+      height: 100%;
+      text-align: center;
+      margin: 0;
+    }
+    body:before {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+    .container {
+      display: inline-block;
+      vertical-align: middle;
+      width: 200px;
+      height: 50px;
+      position: relative;
+      background: #fff;
+    }
+    span {
+      display: block;
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    h2 {
+      display: block;
+      width: 200px;
+      height: 25px;
+      font-size: 20px;
+      line-height: 25px;
+      font-family: sans-serif;
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 0;
+    }
+    input {
+      display: inline-block;
+      width: 200px;
+      height: 25px;
+      border: 1px solid grey;
+      text-align: center;
+      font-size: 18px;
+      outline: none;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+    input:focus {
+      border-color: skyblue;
+    }
+  </style>
+</head>
+<body id="preview">
+  <div class="container">
+    <h2 id="name"></h2>
+    <input type="text" id="input" autofocus>
+  </div>
+  <script src="dist/bundle.min.js"></script>
+</body>
+</html>

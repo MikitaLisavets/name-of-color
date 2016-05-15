@@ -1,0 +1,17 @@
+{
+  "name": "name-of-color",
+  "version": "1.0.0",
+  "scripts": {
+    "webpack": "webpack --watch",
+    "server": "webpack-dev-server --hot --port 7979",
+    "start": "npm run webpack & npm run server"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-loader": "^0.8.2",
+    "typescript": "^1.8.10",
+    "webpack": "^1.13.0",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
