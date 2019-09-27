@@ -1,18 +1,24 @@
-var webpack = require("webpack");
+const webpack = require("webpack")
+const path = require('path')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   entry: './app/app.ts',
+  mode: 'development',
   output: {
-    path: './dist/',
+    path: path.resolve(__dirname, './dist'),
     filename: 'bundle.min.js'
   },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js"]
+  },
   module: {
-    loaders: [
-      { test: /^(?!.*(spec|e2e)).*ts$/, loader: 'ts-loader' , exclude: [/node_modules/] }
+    rules: [
+      { test: /\.tsx?$/, loader: "ts-loader" }
     ]
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({compress: { warnings: false }})
+    new UglifyJsPlugin()
   ],
   devtool: 'source-map'
 }
