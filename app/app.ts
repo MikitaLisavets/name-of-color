@@ -1,49 +1,68 @@
+interface RGB {
+  r?: number;
+  g?: number;
+  b?: number
+}
+
+
 class App {
-  name: any;
-  input: any;
-  preview: any;
-  state: any;
+  name: HTMLElement;
+  input: HTMLElement;
+  preview: HTMLElement;
+
   constructor() {
     this.name = document.getElementById('name');
     this.input = document.getElementById('input');
     this.preview = document.getElementById('preview');
-    this.state = {};
   }
+
   init() {
     this.input.addEventListener('keyup', this.onKeyUp.bind(this, event));
   }
+
   onKeyUp(_, event) {
-    let value = event.target.value
-      .toUpperCase()
-      .replace(/#|RGB|\(|\)|\s|;/g,'');
+    const value = event.target.value
+    const rgb: RGB = this.getRGBColor(value)
+    if (!rgb) {
+      this.preview.style.background = ''
+      this.name.innerHTML = ''
+      return
+    }
+
+    this.convertRGBToMD5(rgb);
+  }
+
+  getRGBColor(input) {
+    let temp
+    const value: string = input.toUpperCase().replace(/#|RGB|\(|\)|\s|;/g,'')
+    const rgb: RGB = {}
 
     if (value.indexOf(',') > 0) {
-       let tmp = value.split(',');
-       if (tmp.length === 3) {
-         this.state.r = tmp[0];
-         this.state.g = tmp[1];
-         this.state.b = tmp[2];
-       }
-    } else if (value.length === 3) {
-      this.state.r = parseInt(value[0] + value[0], 16);
-      this.state.g = parseInt(value[1] + value[1], 16);
-      this.state.b = parseInt(value[2] + value[2], 16);
-    } else if (value.length === 6) {
-      this.state.r = parseInt(value[0] + value[1], 16);
-      this.state.g = parseInt(value[2] + value[3], 16);
-      this.state.b = parseInt(value[4] + value[5], 16);
-    } else {
-      this.preview.style.background = '';
-      this.name.innerHTML = '';
-      return;
-    }
-    this.getName();
+      temp = value.split(',');
+      if (temp.length === 3) {
+        rgb.r = temp[0];
+        rgb.g = +temp[1];
+        rgb.b = +temp[2];
+      }
+   } else if (value.length === 3) {
+     rgb.r = parseInt(value[0] + value[0], 16);
+     rgb.g = parseInt(value[1] + value[1], 16);
+     rgb.b = parseInt(value[2] + value[2], 16);
+   } else if (value.length === 6) {
+     rgb.r = parseInt(value[0] + value[1], 16);
+     rgb.g = parseInt(value[2] + value[3], 16);
+     rgb.b = parseInt(value[4] + value[5], 16);
+   } else {
+     return;
+   }
+   return rgb
   }
-  getName() {
+
+  convertRGBToMD5(rgb: RGB) {
     let nameOfColor = '',
-        red = +this.state.r,
-        green = +this.state.g,
-        blue = +this.state.b,
+        red = rgb.r,
+        green = rgb.g,
+        blue = rgb.b,
         max = Math.max(red, green, blue),
         hash = this.MD5('' + red.toString(16) + green.toString(16) + blue.toString(16)).slice(0, 7);
 
@@ -87,7 +106,6 @@ class App {
   }
 
   MD5(string) {
-
     function RotateLeft(lValue, iShiftBits) {
       return (lValue<<iShiftBits) | (lValue>>>(32-iShiftBits));
     }
@@ -288,5 +306,7 @@ class App {
   }
 }
 
-let app = new App();
-app.init();
+document.addEventListener('DOMContentLoaded', () => {
+  const APP = new App();
+  APP.init();
+})
