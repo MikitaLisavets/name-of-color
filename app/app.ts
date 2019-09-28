@@ -39,8 +39,8 @@ class App {
     const rgbColor: RGB = this.decriptColor(encriptedColor)
 
     if (rgbColor) {
-      this.name.innerHTML = 'rgb(' + rgbColor.r + ',' + rgbColor.g + ',' + rgbColor.b + ')'
-      this.preview.style.background = 'rgb(' + rgbColor.r + ',' + rgbColor.g + ',' + rgbColor.b + ')';
+      this.name.innerHTML = `rgb(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b})`
+      this.preview.style.background = `rgb(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b})`
     }
   }
 
@@ -55,7 +55,7 @@ class App {
     const encriptedColor = this.encriptColor(rgb)
     if (encriptedColor) {
       this.name.innerHTML = encriptedColor
-      this.preview.style.background = 'rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ')';
+      this.preview.style.background = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
     }
   }
 
