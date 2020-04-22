@@ -9,6 +9,7 @@ const BUILD_DIR = path.resolve(__dirname, 'dist');
 
 module.exports = {
   entry: './src/main.ts',
+  mode:  'production',
   output: {
     filename: 'bundle.js',
     path: BUILD_DIR,
@@ -38,4 +39,4 @@ module.exports = {
     minimize: true,
     minimizer: [new TerserPlugin()],
   }
-}
+};
