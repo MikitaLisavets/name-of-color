@@ -74,8 +74,11 @@ function getHashFromColorName(value: string): string {
   const cityIndex = cities.findIndex((city: ICity) => city.name.toLowerCase() === cityName);
   const decimal = index * cities.length + cityIndex;
   const hex = decimal.toString(16);
+  const fullHex = hex.length < 6
+    ? '000000'.split('').map((_, i) => hex[hex.length - 1 - i] || 0).reverse().join('')
+    : hex;
 
-  return `#${hex}`;
+  return `#${fullHex}`;
 }
 
 function getColorNameFromHash(value: string): string {
@@ -85,6 +88,7 @@ function getColorNameFromHash(value: string): string {
   const decimal = parseInt(fullHex, 16);
   const index = Math.floor(decimal / cities.length);
   const name = cities[decimal % cities.length].name.toLowerCase().replace(/\s/g, '-');
+
   return `${prefix}-${name}-${index}`;
 }
 
