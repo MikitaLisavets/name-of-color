@@ -1,0 +1,23 @@
+name: GitHub Pages deploy
+on:
+  push:
+    branches:
+      - master
+jobs:
+  checkout-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: Npm Install
+      run:  npm install
+    - name: Build
+      run:  npm run build
+    - name: Deploy to GitHub Pages
+      uses: Cecilapp/GitHub-Pages-deploy@master
+      env:
+        EMAIL: ${{ secrets.EMAIL }}
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        BUILD_DIR: dist
