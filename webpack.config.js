@@ -1,24 +1,41 @@
-const webpack = require("webpack")
-const path = require('path')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+
+const PUBLIC_DIR = path.resolve(__dirname, 'public');
+const SRC_DIR = path.resolve(__dirname, 'src');
+const BUILD_DIR = path.resolve(__dirname, 'dist');
+
 
 module.exports = {
-  entry: './app/app.ts',
-  mode: 'development',
+  entry: './src/main.ts',
   output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: 'bundle.min.js'
+    filename: 'bundle.js',
+    path: BUILD_DIR,
+  },
+  devServer: {
+    contentBase: SRC_DIR
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js"]
+    extensions: [ '.tsx', '.ts', '.js' ],
   },
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: "ts-loader" }
-    ]
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+    ],
   },
   plugins: [
-    new UglifyJsPlugin()
+    new CopyPlugin([
+      { from: PUBLIC_DIR, to: BUILD_DIR }
+    ]),
   ],
-  devtool: 'source-map'
+  devtool: 'source-map',
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  }
 }
