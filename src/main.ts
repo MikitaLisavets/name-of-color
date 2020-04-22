@@ -22,7 +22,7 @@ class App {
     this.name = document.getElementById('name');
     this.preview = document.getElementById('preview');
     this.input = document.getElementById('input');
-    this.input?.addEventListener('change', (event: Event) => this.onKeyUp(event));
+    this.input?.addEventListener('keyup', (event: Event) => this.onKeyUp(event));
   }
 
   onKeyUp(event: Event) {
