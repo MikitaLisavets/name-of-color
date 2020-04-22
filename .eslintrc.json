@@ -5,7 +5,6 @@
         "node": true
     },
     "extends": [
-        "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended"
     ],
     "globals": {
@@ -21,6 +20,10 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "semi": [2]
+        "arrow-body-style": [2, "as-needed"],
+        "semi": [2, "always"],
+        "quotes": [2, "single"],
+        "indent": [2, 2],
+        "padded-blocks": [2, "never"]
     }
 }
