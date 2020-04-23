@@ -1,5 +1,4 @@
-import { IState, ICity } from './interfaces';
-const cities = require('cities.json');
+import { IState } from './interfaces';
 
 const state: IState = {
   titleEl:   null,
@@ -29,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function changeInputHandler(event: Event) {
   const targetEl = event.target as HTMLInputElement;
-  const inputValue = targetEl.value.toLowerCase();
+  const inputValue = targetEl.value;
   let previewValue = '';
   let titleValue = '';
   if (!inputValue) return;
@@ -65,16 +64,8 @@ function updateTitle(titleEl: HTMLElement, titleValue: string = ''): void {
 }
 
 function getHashFromColorName(value: string): string {
-  const separatedСolorName = value.split('-');
-  separatedСolorName.shift();
-  const index = Number(separatedСolorName.pop());
-  const cityName = separatedСolorName.join(' ');
-  const cityIndex = cities.findIndex((city: ICity) => city.name.toLowerCase() === cityName);
-  const decimal = index * cities.length + cityIndex;
-  const hex = decimal.toString(16);
-  const fullHex = hex.length < 6
-    ? '000000'.split('').map((_, i) => hex[hex.length - 1 - i] || 0).reverse().join('')
-    : hex;
+  const name = value.slice(value.indexOf('-') + 1);
+  const fullHex = window.atob(name);
 
   return `#${fullHex}`;
 }
@@ -82,16 +73,18 @@ function getHashFromColorName(value: string): string {
 function getColorNameFromHash(value: string): string {
   const hex = value.replace('#', '');
   const fullHex = hex.length === 6 ? hex : fillHex(hex);
+  const name = window.btoa(fullHex.toUpperCase());
   const prefix = getPrefix(fullHex);
-  const decimal = parseInt(fullHex, 16);
-  const index = Math.floor(decimal / cities.length);
-  const name = cities[decimal % cities.length].name.toLowerCase().replace(/\s/g, '-');
 
-  return `${prefix}-${name}-${index}`;
+  return `${prefix}-${name}`;
 }
 
 function fillHex(hex: string): string {
   return hex.split('').reduce((acc, el) => acc + el + el, '');
+}
+
+function restoreHex(hex: string): string {
+  return '000000'.split('').map((_, i) => hex[hex.length - 1 - i] || 0).reverse().join('');
 }
 
 function getPrefix(fullHex: string): string {
