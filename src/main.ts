@@ -25,8 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
   state.inputEl = document.getElementById('input');
 
   state.inputEl?.addEventListener('keyup', changeInputHandler);
-
-  console.log('DOMContentLoaded');
 });
 
 function changeInputHandler(event: Event) {
